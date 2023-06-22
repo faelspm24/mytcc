@@ -27,13 +27,7 @@ exports.login = async function (req, res) {
     // ...
     req.session.user = login.user;
     req.session.save(function () {
-      if (login.isRoot()) {
-        // Usuário root
-        return res.render("roothome", { user: login.user, isAdmin: true });
-      } else {
-        // Usuário normal
-        return res.render("home", { user: login.user, isAdmin: false });
-      }
+      return res.render("home", { user: login.user });
     });
   } catch (e) {
     console.log(e);

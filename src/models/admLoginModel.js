@@ -2,10 +2,9 @@ const mongoose = require("mongoose");
 const validator = require("validator");
 const bcrypt = require("bcrypt");
 
-const loginSchema = new mongoose.Schema({
+const admLoginSchema = new mongoose.Schema({
   nome: {
     type: String,
-    required: true,
   },
   email: {
     type: String,
@@ -18,28 +17,34 @@ const loginSchema = new mongoose.Schema({
   },
 });
 
-const loginModel = mongoose.model("Login", loginSchema);
+const admLogin = mongoose.model("Administradores", admLoginSchema);
 
-class Login {
+class admUser {
   constructor(body) {
     this.body = body;
     this.errors = [];
-    this.user = null;
+    this.userAdm = null;
   }
 
   async login() {
     this.valida();
     if (this.errors.length > 0) return;
-    this.user = await loginModel.findOne({ email: this.body.email });
 
-    if (!this.user) {
+    this.userAdm = await admLogin.findOne({ email: this.body.email });
+
+    if (!this.userAdm) {
       this.errors.push("Usuário não existe!");
       return;
     }
 
-    if (!bcrypt.compareSync(this.body.senha, this.user.senha)) {
+    const senhaValida = await bcrypt.compare(
+      this.body.senha,
+      this.userAdm.senha
+    );
+
+    if (!senhaValida) {
       this.errors.push("Senha Inválida!");
-      this.user = null;
+      this.userAdm = null;
       return;
     }
   }
@@ -51,25 +56,27 @@ class Login {
     await this.userExists();
     if (this.errors.length > 0) return;
 
-    const salt = bcrypt.genSaltSync();
-    this.body.senha = bcrypt.hashSync(this.body.senha, salt);
+    const salt = await bcrypt.genSalt();
+    this.body.senha = await bcrypt.hash(this.body.senha, salt);
 
-    this.user = await loginModel.create(this.body);
+    this.userAdm = await admLogin.create(this.body);
   }
 
   async userExists() {
-    this.user = await loginModel.findOne({ email: this.body.email });
-    if (this.user) this.errors.push("Usuário já existente!");
+    this.userAdm = await admLogin.findOne({ email: this.body.email });
+    if (this.userAdm) this.errors.push("Usuário já existente!");
   }
 
   valida() {
     this.cleanUp();
 
-    //Validação
-    //O email precisa ser válido
+    // Validação
+    // O email precisa ser válido
+    // Validação
+    // O email precisa ser válido
     if (!validator.isEmail(this.body.email)) this.errors.push("Email inválido");
 
-    //A senha precisa ter entre 3 e 50 caracteres
+    // A senha precisa ter entre 3 e 50 caracteres
     if (this.body.senha.length < 3 || this.body.senha.length > 50) {
       this.errors.push("A senha precisa ter entre 3 e 50 caracteres");
     }
@@ -90,4 +97,4 @@ class Login {
   }
 }
 
-module.exports = Login;
+module.exports = admUser;

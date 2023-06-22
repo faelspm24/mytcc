@@ -9,17 +9,6 @@ const cookieParser = require("cookie-parser");
 const mongoose = require("mongoose");
 
 // Mongoose connection
-mongoose.set("strictQuery", false);
-mongoose
-  .connect(
-    "mongodb+srv://faelspm20:naoseiasenha@cluster0.v1s47k7.mongodb.net/tccprojetc?retryWrites=true&w=majority"
-  )
-  .then(() => {
-    console.log("Database connected with success!");
-  })
-  .catch((error) => {
-    console.log(error);
-  });
 
 const app = express();
 
@@ -53,7 +42,7 @@ app.use((req, res, next) => {
   res.locals.successMessages = req.flash("success");
   res.locals.errorMessages = req.flash("errors");
   res.locals.user = req.session.user;
-  res.locals.host = req.session.host;
+  res.locals.isAdmin = req.session.isAdmin;
   next();
 });
 

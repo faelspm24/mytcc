@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Dados do MongoDB</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+
+<body>
+    <div class="container">
+        <h1>Usuários registrados</h1>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nome</th>
+                    <th>Email</th>
+                    <th>Série</th>
+                    <th>Horário</th>
+                    <th>Computadores</th>
+                    <th>Período</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% consultas.forEach((item)=> { %>
+                    <tr>
+                        <td>
+                            <%= item._id %>
+                        </td>
+                        <td>
+                            <%= item.nome %>
+                        </td>
+                        <td>
+                            <%= item.serie %>
+                        </td>
+                        <td>
+                            <%= item.horario %>
+                        </td>
+                        <td>
+                            <%= item.data %>
+                        </td>
+                        <td>
+                            <%= item.computadores %>
+                        </td>
+                        <td>
+                            <%= item.periodo %>
+                        </td>
+                        <td>
+                            <a href="/editar/<%= item._id %>" class="btn btn-primary">Editar<br></a>
+                            <a href="/excluir/<%= item._id %>" class="btn btn-danger">Excluir</a>
+                        </td>
+                    </tr>
+                    <% }); %>
+            </tbody>
+        </table>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>
