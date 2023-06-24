@@ -26,7 +26,7 @@
                 <% consultas.forEach((item)=> { %>
                     <tr>
                         <td>
-                            <%= item._id %>
+                            <%= item.id %>
                         </td>
                         <td>
                             <%= item.nome %>
@@ -47,8 +47,8 @@
                             <%= item.periodo %>
                         </td>
                         <td>
-                            <a href="/editar/<%= item._id %>" class="btn btn-primary">Editar<br></a>
-                            <a href="/excluir/<%= item._id %>" class="btn btn-danger">Excluir</a>
+                            <a href="/editar/usuario/<%= item.id %>" class="btn btn-danger">Editar</a>
+                            <a href="/excluir/<%= item.id %>" class="btn btn-danger">Excluir</a>
                         </td>
                     </tr>
                     <% }); %>

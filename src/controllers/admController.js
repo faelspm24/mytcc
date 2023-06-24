@@ -91,9 +91,11 @@ exports.allRegisters = async function (req, res) {
 exports.excluirRegistro = async function (req, res) {
   try {
     const agendamentoId = req.params.id;
-    const data = await Agendamento.deleteOne({ _id: ObjectId(agendamentoId) });
+    const filter = { _id: new ObjectId(agendamentoId) };
 
-    if (data.deletedCount > 0) {
+    const result = await Agendamento.deleteOne(filter);
+
+    if (result.deletedCount === 1) {
       res.status(200).json({ message: "Registro excluído com sucesso" });
     } else {
       res.status(404).json({ message: "Registro não encontrado" });
@@ -101,5 +103,63 @@ exports.excluirRegistro = async function (req, res) {
   } catch (error) {
     console.error("Erro ao excluir o registro:", error);
     res.status(500).json({ message: "Erro ao excluir o registro" });
+  }
+};
+
+exports.editarRegistroIndex = async function (req, res) {
+  try {
+    const agendamentoId = req.params.id;
+
+    // Consultar o agendamento com base no ID
+    const agendamento = await Agendamento.findById(agendamentoId);
+
+    if (!agendamento) {
+      // Agendamento não encontrado
+      return res.status(404).json({ message: "Agendamento não encontrado" });
+    }
+
+    // Renderizar a view "EditarDados" com os dados do agendamento
+    res.render("EditarDados", {
+      _id: agendamento._id,
+      nome: agendamento.nome,
+      serie: agendamento.serie,
+      horario: agendamento.horario,
+      data: agendamento.data,
+      computadores: agendamento.computadores,
+      periodo: agendamento.periodo,
+    });
+  } catch (error) {
+    console.error("Erro ao obter os dados do agendamento:", error);
+    res.status(500).json({ message: "Erro ao obter os dados do agendamento" });
+  }
+};
+
+exports.editarRegistro = async function (req, res) {
+  try {
+    const agendamentoId = req.params.id;
+    const { nome, serie, horario, data, computadores, periodo } = req.body;
+
+    // Verifique se todos os campos necessários estão presentes no corpo da solicitação
+    if (!nome) {
+      return res.status(400).render("editarDados", {
+        error: "Campo nome é obrigatório",
+      });
+    }
+
+    const filter = { _id: new ObjectId(agendamentoId) };
+    const update = {
+      $set: { nome, serie, horario, data, computadores, periodo },
+    };
+
+    const result = await Agendamento.updateOne(filter, update);
+
+    if (result.matchedCount === 1) {
+      res.redirect("/login/administrador/agendamentos");
+    } else {
+      res.status(404).json({ message: "Registro não encontrado" });
+    }
+  } catch (error) {
+    console.error("Erro ao editar o registro:", error);
+    res.status(500).json({ message: "Erro ao editar o registro" });
   }
 };

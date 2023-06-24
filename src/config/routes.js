@@ -69,7 +69,8 @@ route.get(
   admController.requireAdmin,
   admController.allRegisters
 );
-route.get("/excluir/:_id", admController.excluirRegistro);
-// ...
+route.get("/excluir/:id", admController.excluirRegistro);
+route.get("/editar/usuario/:id", admController.editarRegistroIndex);
+route.post("/editar/usuario/edicao/:id", admController.editarRegistro);
 
 module.exports = route;
