@@ -47,7 +47,7 @@ route.get("/login/logout", nocache(), loginController.logout, (req, res) => {
 
 // Rotas de Agendamento
 
-route.get("/agendamento", loginRequired, agendamentoController.index);
+route.get("/agendamento", agendamentoController.index);
 route.get("/agendamento/consultar", agendamentoController.consultar);
 // ...
 

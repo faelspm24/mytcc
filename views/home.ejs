@@ -19,7 +19,6 @@
     .header {
         width: 100%;
         height: 100vh;
-        background: #b2bfce
     }
 
     .side-nav {
@@ -30,6 +29,20 @@
         top: 0;
         left: 0;
         padding: 20px 30px;
+        float: left;
+    }
+
+    .content {
+        margin-left: 250px;
+        padding: 20px;
+        display: flex;
+        /* Adicionado */
+        justify-content: center;
+        /* Adicionado */
+        align-items: center;
+        /* Adicionado */
+        height: 100vh;
+        /* Adicionado */
     }
 
     .logo {
@@ -91,37 +104,33 @@
     }
 
     .nav-links li:nth-child(2):hover~.active {
-        top: 16.2%;
+        top: 14.2%;
     }
 
     .nav-links li:nth-child(3):hover~.active {
-        top: 32%;
+        top: 28.7%;
     }
 
     .nav-links li:nth-child(4):hover~.active {
-        top: 47.6%;
+        top: 45.6%;
     }
 
     .nav-links li:nth-child(5):hover~.active {
-        top: 62.4%;
+        top: 59.4%;
     }
 
     .nav-links li:nth-child(6):hover~.active {
-        top: 75.5%;
+        top: 73.8%;
     }
 
     .nav-links li:nth-child(7):hover~.active {
         top: 88.3%;
     }
 
-
-
-
     .logo-icon {
         display: none;
         width: 45px;
     }
-
 
     @media only screen and (max-width: 600px) {
         .side-nav {
@@ -147,70 +156,58 @@
         .nav-links li a {
             justify-content: center;
         }
-
     }
 
     .name {
         color: azure;
-
-        ;
     }
 </style>
 
 <body>
-    bem vindo a home
-
-    <div class="header">
-        <div class="side-nav">
-
-            <a href="#" class="logo">
-                <img src="\src\logo.png" class="logo-img" />
-                <img src="/src/logo-icon.png" class="logo-icon">
-
-            </a>
-            <h3 class="name">Ola,
-            </h3>
-            <br>
-            <ul class="nav-links">
-                <li><a href="#">
-                        <i class="fa-solid fa-house-user"></i>
-                        <p>Dashboard</p>
-                    </a></li>
-                <li><a href="/agendamento">
-                        <i class="fa-solid fa-plus"></i>
-                        <p>Novo Agendamento </p>
-                    </a></li>
-                <li><a href="/agendamento/consultar">
-                        <i class="fa-solid fa-calendar-days"></i>
-                        <p>Consultar Agenda</p>
-                    </a></li>
-                <li><a href="#">
-                        <i class="fa-solid fa-computer"></i>
-                        <p>Computadores Disponíveis </p>
-                    </a></li>
-                <li><a href="#">
-                        <i class="fa-solid fa-user"></i>
-                        <p>Perfil</p>
-                    </a></li>
-                <li><a href="#">
-                        <i class="fa-solid fa-circle-exclamation"></i>
-                        <p>Reclame aqui</p>
-                    </a></li>
-                <li><a href="/login/logout">
-                        <i class="fa-solid fa-arrow-right-from-bracket"></i>
-                        <p>Sair</p>
-                    </a></li>
-                <div class="active"></div>
-            </ul>
-
-
-
-
-        </div>
+    <div class="side-nav">
+        <a href="#" class="logo">
+            <img src="\src\logo.png" class="logo-img" />
+            <img src="/src/logo-icon.png" class="logo-icon">
+        </a>
+        <h3 class="name"></h3>
+        <br>
+        <ul class="nav-links">
+            <li><a href="#">
+                    <i class="fa-solid fa-house-user"></i>
+                    <p>Dashboard</p>
+                </a></li>
+            <li><a href="/agendamento">
+                    <i class="fa-solid fa-plus"></i>
+                    <p>Novo Agendamento</p>
+                </a></li>
+            <li><a href="/agendamento/consultar">
+                    <i class="fa-solid fa-calendar-days"></i>
+                    <p>Consultar Agenda</p>
+                </a></li>
+            <li><a href="#">
+                    <i class="fa-solid fa-computer"></i>
+                    <p>Computadores Disponiveis </p>
+                </a></li>
+            <li><a href="#">
+                    <i class="fa-solid fa-user"></i>
+                    <p>Perfil</p>
+                </a></li>
+            <li><a href="#">
+                    <i class="fa-solid fa-circle-exclamation"></i>
+                    <p>Reclame Aqui </p>
+                </a></li>
+            <li><a href="/login/logout">
+                    <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                    <p>Sair</p>
+                </a></li>
+            <div class="active"></div>
+        </ul>
     </div>
-
-
-
+    <div class="content">
+        <h1>
+            Bem vindo <%- user.nome %>
+        </h1>
+    </div>
 </body>
 
 </html>

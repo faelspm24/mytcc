@@ -16,6 +16,14 @@ const loginSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  ra: {
+    type: Number,
+    required: true,
+  },
+  datanascimento: {
+    type: Date,
+    required: true,
+  },
 });
 
 const loginModel = mongoose.model("Login", loginSchema);
@@ -65,11 +73,11 @@ class Login {
   valida() {
     this.cleanUp();
 
-    //Validação
-    //O email precisa ser válido
+    // Validação
+    // O email precisa ser válido
     if (!validator.isEmail(this.body.email)) this.errors.push("Email inválido");
 
-    //A senha precisa ter entre 3 e 50 caracteres
+    // A senha precisa ter entre 3 e 50 caracteres
     if (this.body.senha.length < 3 || this.body.senha.length > 50) {
       this.errors.push("A senha precisa ter entre 3 e 50 caracteres");
     }
@@ -86,6 +94,8 @@ class Login {
       nome: this.body.nome,
       email: this.body.email,
       senha: this.body.senha,
+      datanascimento: this.body.datanascimento,
+      ra: this.body.ra,
     };
   }
 }

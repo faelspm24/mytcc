@@ -96,7 +96,7 @@ exports.excluirRegistro = async function (req, res) {
     const result = await Agendamento.deleteOne(filter);
 
     if (result.deletedCount === 1) {
-      res.status(200).json({ message: "Registro excluído com sucesso" });
+      res.redirect("/login/administrador/agendamentos/");
     } else {
       res.status(404).json({ message: "Registro não encontrado" });
     }

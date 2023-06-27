@@ -39,23 +39,16 @@ exports.register = function (req, res) {
     periodo: req.body.periodo,
   });
 
-  novoAgendamento
-    .save()
-    .then((data) => {
-      res.send(data);
-    })
-    .catch((err) => {
-      res.status(500).send({
-        message:
-          err.message || "Ocorreu algum erro durante a criação do agendamento.",
-      });
-    });
+  novoAgendamento.save();
+  res.render("home");
 };
 exports.consultar = async function (req, res) {
   try {
     const userId = req.session.user;
     const consultas = await Agendamento.find({ usuario: userId });
-    res.status(200).send(consultas);
+    res.status(200).render("consultaragenda", {
+      consultas: consultas,
+    });
   } catch (e) {
     res.status(500).json({ message: "Erro ao consultar" });
   }
