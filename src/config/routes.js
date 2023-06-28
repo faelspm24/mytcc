@@ -40,10 +40,7 @@ route.post(
 // Rotas de Login
 route.get("/login/index", loginController.index);
 route.post("/login/login", loginController.login, (req, res) => {});
-route.get("/login/logout", nocache(), loginController.logout, (req, res) => {
-  res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
-  res.setHeader("Expires", "0");
-});
+route.get("/login/logout", loginController.logout, (req, res) => {});
 
 // Rotas de Agendamento
 
@@ -73,4 +70,19 @@ route.get("/excluir/:id", admController.excluirRegistro);
 route.get("/editar/usuario/:id", admController.editarRegistroIndex);
 route.post("/editar/usuario/edicao/:id", admController.editarRegistro);
 
+route.get(
+  "/administrado/editar/computadores",
+  admController.editarComputadores
+);
+route.get(
+  "/administrar/adicionar/computador",
+  admController.adicionarComputador
+);
+
+route.post(
+  "/administrador/cadastrar/computador",
+  admController.cadastrarComputador
+);
+
+route.get("/excluir/computador/:id", admController.apagarComputador);
 module.exports = route;

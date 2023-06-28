@@ -8,53 +8,43 @@
 
 <body>
     <div class="container">
-        <h2>Agendamentos Registrados </h2>
+        <h2>Agendamentos Registrados</h2>
         <table class="table table-striped table-dark table-bordered">
             <thead>
                 <tr>
                     <th>ID</th>
                     <th>Nome</th>
-                    <th>Email</th>
                     <th>Série</th>
                     <th>Horário</th>
-                    <th>Computadores</th>
-                    <th>Período</th>
-                    <th>Período</th>
 
+                    <th>Período</th>
+                    <th>Editar</th>
+                    <th>Excluir</th>
                 </tr>
             </thead>
             <tbody>
                 <% consultas.forEach((item)=> { %>
                     <tr>
                         <td>
-                            <%= item.id %>
+                            <%= item._id %>
                         </td>
                         <td>
                             <%= item.nome %>
                         </td>
+
                         <td>
                             <%= item.serie %>
                         </td>
                         <td>
                             <%= item.horario %>
-                        </td>
-                        <td>
-                            <%= item.data %>
-                        </td>
-                        <td>
-                            <%= item.computadores %>
-                        </td>
+
+
+
                         <td>
                             <%= item.periodo %>
                         </td>
-                        <td><a href="/editar/usuario/<%= item.id %>" class="btn btn-danger ">Editar</a></td>
-                        <td>
-                            <a href="/excluir/<%= item.id %>" class="btn btn-danger">Excluir</a>
-                        </td>
-                        <td>
-
-
-                        </td>
+                        <td><a href="/editar/usuario/<%= item.id %>" class="btn btn-danger">Editar</a></td>
+                        <td><a href="/excluir/<%= item.id %>" class="btn btn-danger">Excluir</a></td>
                     </tr>
                     <% }); %>
             </tbody>

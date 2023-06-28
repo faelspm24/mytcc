@@ -21,13 +21,13 @@ const agendamentoSchema = new mongoose.Schema({
     type: Date,
     required: true,
   },
-  computadores: {
-    type: Number,
-    required: true,
-  },
   periodo: {
     type: String,
     required: true,
+  },
+  computadorId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Computadores",
   },
 });
 

@@ -1,6 +1,7 @@
 const admModel = require("../models/admLoginModel");
 const Agendamento = require("../models/agendamentoModel");
 const { ObjectId } = require("mongodb");
+const Computadores = require("../models/computadoresModel");
 
 exports.index = function (req, res) {
   res.render("rootRegister", {
@@ -161,5 +162,70 @@ exports.editarRegistro = async function (req, res) {
   } catch (error) {
     console.error("Erro ao editar o registro:", error);
     res.status(500).json({ message: "Erro ao editar o registro" });
+  }
+};
+
+exports.editarComputadores = async function (req, res) {
+  try {
+    const computadores = await Computadores.find({});
+
+    res.render("editarComputadores", {
+      computadores: computadores,
+    });
+  } catch (error) {
+    console.error("Erro ao obter os computadores:", error);
+    res.status(500).json({ message: "Erro ao obter os computadores" });
+  }
+};
+
+exports.adicionarComputador = function (req, res) {
+  res.render("cadastroComputador", {
+    identificacao: "",
+    disponivel: true,
+  });
+};
+
+exports.cadastrarComputador = async function (req, res) {
+  if (!req.body) {
+    res
+      .status(400)
+      .send({ message: "Os dados do computador são obrigatórios." });
+    return;
+  }
+
+  const { identificacao, disponivel } = req.body;
+
+  // Criar uma nova instância do modelo Computadores
+  const novoComputador = new Computadores({
+    identificacao: identificacao,
+    disponivel: disponivel,
+  });
+
+  try {
+    // Salvar o novo computador no banco de dados
+    const computadorSalvo = await novoComputador.save();
+    res.render("roothome"); // Corrigido o nome da página inicial
+  } catch (error) {
+    console.log(error); // Adicionado console.log para exibir o erro no console
+    res.status(500).json({ message: "Erro ao cadastrar o computador." });
+  }
+};
+
+exports.apagarComputador = async function (req, res) {
+  try {
+    const computadorId = req.params.id; // Obtém o ID do computador a ser apagado
+
+    const filter = { _id: new ObjectId(computadorId) };
+
+    const result = await Computadores.deleteOne(filter);
+
+    if (result.deletedCount === 1) {
+      res.renderx("roothome");
+    } else {
+      res.status(404).json({ message: "Registro não encontrado" });
+    }
+  } catch (error) {
+    console.error("Erro ao excluir o registro:", error);
+    res.status(500).json({ message: "Erro ao excluir o registro" });
   }
 };
